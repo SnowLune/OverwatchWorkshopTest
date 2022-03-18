@@ -1,0 +1,84 @@
+settings
+{
+	main
+	{
+		Description: "test Workshop code here"
+		Mode Name: "test"
+	}
+
+	modes
+	{
+		Skirmish
+		{
+			enabled maps
+			{
+				Workshop Chamber
+			}
+		}
+
+		General
+		{
+			Game Mode Start: Immediately
+			Health Pack Respawn Time Scalar: 10%
+			Hero Limit: Off
+			Limit Roles: 2 Of Each Role Per Team
+			Respawn Time Scalar: 0%
+		}
+	}
+
+	heroes
+	{
+		General
+		{
+			Ability Cooldown Time: 0%
+			No Ammunition Requirement: On
+			Ultimate Duration: 500%
+			Ultimate Generation: 500%
+			Ultimate Generation - Combat: 500%
+			Ultimate Generation - Passive: 500%
+		}
+	}
+}
+
+rule("Display server performance characteristics")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Create HUD Text
+		(
+			All Players(All Teams),
+			String("{0}: {1}", String("Server Load"), String("{0}%", Server Load)),
+			Null,
+			Null,
+			Left,
+			0,
+			Color(White),
+			Color(White),
+			Color(White),
+			Visible To and String,
+			Default Visibility
+		);
+		Create HUD Text(All Players(All Teams), String("{0}: {1}", String("Server Load Average"), String("{0}%", Server Load Average)),
+			Null, Null, Left, 1, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
+		Create HUD Text(All Players(All Teams), String("{0}: {1}", String("Server Load Peak"), String("{0}%", Server Load Peak)), Null,
+			Null, Left, 2, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
+	}
+}
+
+rule("Create Dummy")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	actions
+	{
+		Create Dummy Bot(Hero(Reaper), Team 2, -1, Vector(0, 0, 0), Vector(0, 0, 0));
+	}
+}
